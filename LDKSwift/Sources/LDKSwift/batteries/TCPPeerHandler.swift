@@ -31,13 +31,12 @@ public class TCPPeerHandler {
         }
         self.isBound = true
         var addressObject = sockaddr_in()
-        addressObject.sin_len = UInt8(MemoryLayout.size(ofValue: addressObject))
         addressObject.sin_family = sa_family_t(AF_INET)
-        addressObject.sin_port = CFSwapInt16HostToBig(port)
+        addressObject.sin_port = port.bigEndian
 
         addressObject.sin_addr.s_addr = inet_addr(address)
         
-        let sin_length = addressObject.sin_len
+        let sin_length = UInt8(MemoryLayout.size(ofValue: addressObject))
 
         let result = withUnsafePointer(to: &addressObject, { addressPointer in
             
@@ -59,13 +58,12 @@ public class TCPPeerHandler {
     public func connect(address: String, port: UInt16, theirNodeId: [UInt8]) -> Bool {
         
         var addressObject = sockaddr_in()
-        addressObject.sin_len = UInt8(MemoryLayout.size(ofValue: addressObject))
         addressObject.sin_family = sa_family_t(AF_INET)
-        addressObject.sin_port = CFSwapInt16HostToBig(port)
+        addressObject.sin_port = port.bigEndian
 
         addressObject.sin_addr.s_addr = inet_addr(address)
         
-        let sin_length = addressObject.sin_len
+        let sin_length = UInt8(MemoryLayout.size(ofValue: addressObject))
         let publicKey = Bindings.new_LDKPublicKey(array: theirNodeId)
 
         let result = withUnsafePointer(to: &addressObject, { addressPointer in

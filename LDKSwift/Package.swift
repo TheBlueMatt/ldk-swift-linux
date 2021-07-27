@@ -18,7 +18,11 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "LDKSwift",
-            dependencies: ["LDKCHeaders"]),
+            dependencies: ["LDKCHeaders"],
+            linkerSettings: [
+                .linkedLibrary("/root/ldk-c-bindings/lightning-c-bindings/target/debug/libldk.a"),
+                .linkedLibrary("/root/ldk-c-bindings/lightning-c-bindings/ldk_net.o")
+            ]),
         .testTarget(
             name: "LDKSwiftTests",
             dependencies: ["LDKSwift"]),
