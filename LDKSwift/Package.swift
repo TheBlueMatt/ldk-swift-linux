@@ -21,7 +21,8 @@ let package = Package(
             dependencies: ["LDKCHeaders"],
             linkerSettings: [
                 .linkedLibrary("/root/ldk-c-bindings/lightning-c-bindings/target/debug/libldk.a"),
-                .linkedLibrary("/root/ldk-c-bindings/lightning-c-bindings/ldk_net.o")
+                .linkedLibrary("/root/ldk-c-bindings/lightning-c-bindings/ldk_net.o"),
+                .linkedLibrary("/usr/lib/llvm-11/lib/clang/11.0.0/lib/linux/libclang_rt.asan-x86_64.a")
             ]),
         .testTarget(
             name: "LDKSwiftTests",
