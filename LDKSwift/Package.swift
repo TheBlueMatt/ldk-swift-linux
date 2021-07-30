@@ -2,6 +2,7 @@
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
+import Foundation
 
 let package = Package(
     name: "LDKSwift",
@@ -20,8 +21,8 @@ let package = Package(
             name: "LDKSwift",
             dependencies: ["LDKCHeaders"],
             linkerSettings: [
-                .linkedLibrary("/root/ldk-c-bindings/lightning-c-bindings/target/debug/libldk.a"),
-                .linkedLibrary("/root/ldk-c-bindings/lightning-c-bindings/ldk_net.o"),
+                 .linkedLibrary(String(utf8String: getenv("LDK_C_BINDINGS_BASE")!)! + "/lightning-c-bindings/target/debug/libldk.a"),
+                 .linkedLibrary(String(utf8String: getenv("LDK_C_BINDINGS_BASE")!)! + "/lightning-c-bindings/ldk_net.o"),
                 .linkedLibrary("/usr/lib/llvm-11/lib/clang/11.0.0/lib/linux/libclang_rt.asan-x86_64.a")
             ]),
         .testTarget(
